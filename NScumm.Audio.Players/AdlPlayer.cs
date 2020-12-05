@@ -280,5 +280,10 @@ namespace NScumm.Audio.Players
 
             _driver.snd_startSong(soundId);
         }
+
+        public bool Load(Stream stream)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

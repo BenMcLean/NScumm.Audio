@@ -122,5 +122,10 @@ namespace NScumm.Audio.Players
             pos = header.start; del = header.delay; songend = false;
             Opl.WriteReg(1, 32);	// go to OPL2 mode
         }
+
+        public bool Load(Stream stream)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

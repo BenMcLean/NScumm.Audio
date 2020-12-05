@@ -339,7 +339,7 @@ namespace NScumm.Audio.Players
                 for (var i = 0; i < 256; i++)
                 {
                     instname[i] = new string(br.ReadChars(20));
-                    for (var j = 0; j < 11; j++) inst[i,j] = br.ReadByte();
+                    for (var j = 0; j < 11; j++) inst[i, j] = br.ReadByte();
                     fs.Seek(2, SeekOrigin.Current);
                 }
             }
@@ -347,6 +347,11 @@ namespace NScumm.Audio.Players
 
         private void AdPlug_LogWrite(string fmt, params object[] parameters)
         {
+        }
+
+        public bool Load(Stream stream)
+        {
+            throw new NotImplementedException();
         }
     }
 }

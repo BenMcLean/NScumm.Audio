@@ -30,7 +30,7 @@ namespace NScumm.Audio.Players
     /// IMF Player by Simon Peter dn.tlp@gmx.net
     /// This code has been adapted from adplug https://github.com/adplug/adplug
     /// </summary>
-    internal sealed class ImfPlayer: IMusicPlayer
+    internal sealed class ImfPlayer : IMusicPlayer
     {
         private string track_name, game_name, author_name, remarks;
         private long _size;
@@ -179,6 +179,11 @@ namespace NScumm.Audio.Players
             if (string.Equals(Path.GetExtension(path), ".imf", System.StringComparison.OrdinalIgnoreCase)) return 560.0f;
             if (string.Equals(Path.GetExtension(path), ".wlf", System.StringComparison.OrdinalIgnoreCase)) return 700.0f;
             return 700.0f; // default speed for unknown files that aren't .IMF or .WLF
+        }
+
+        public bool Load(Stream stream)
+        {
+            throw new NotImplementedException();
         }
     }
 }

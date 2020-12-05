@@ -118,7 +118,7 @@ namespace NScumm.Audio.Players
 
             for (var c = 0; c < 9; c++)
             {
-                if (music[notenum * 9 + c]!=0)
+                if (music[notenum * 9 + c] != 0)
                     PlayNote(c, music[notenum * 9 + c] % 12, music[notenum * 9 + c] / 12);
                 else
                     PlayNote(c, 0, 0);
@@ -136,6 +136,11 @@ namespace NScumm.Audio.Players
             if (note == 0 && octv == 0) freq = 0;
             Opl.WriteReg(0xa0 + c, freq & 0xff);
             Opl.WriteReg(0xb0 + c, (freq / 0xff) | 32 | (octv * 4));
+        }
+
+        public bool Load(Stream stream)
+        {
+            throw new NotImplementedException();
         }
     }
 }

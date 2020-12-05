@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using NScumm.Core.Audio.OPL;
+using System.IO;
 
 namespace NScumm.Audio.Players
 {
@@ -29,6 +30,7 @@ namespace NScumm.Audio.Players
         float RefreshRate { get; }
 
         bool Load(string path);
+        bool Load(Stream stream);
         bool Update();
     }
 }

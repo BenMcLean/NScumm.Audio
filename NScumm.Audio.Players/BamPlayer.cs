@@ -31,7 +31,7 @@ namespace NScumm.Audio.Players
     /// </summary>
     internal sealed class BamPlayer : IMusicPlayer
     {
-        private static readonly ushort[] freq= {172,182,193,205,217,230,243,258,274,
+        private static readonly ushort[] freq = {172,182,193,205,217,230,243,258,274,
         290,307,326,345,365,387,410,435,460,489,517,547,580,614,651,1369,1389,1411,
         1434,1459,1484,1513,1541,1571,1604,1638,1675,2393,2413,2435,2458,2483,2508,
         2537,2565,2595,2628,2662,2699,3417,3437,3459,3482,3507,3532,3561,3589,3619,
@@ -212,6 +212,11 @@ namespace NScumm.Audio.Players
             }
             label[0].defined = true;
             Opl.WriteReg(1, 32);
+        }
+
+        public bool Load(Stream stream)
+        {
+            throw new NotImplementedException();
         }
     }
 }

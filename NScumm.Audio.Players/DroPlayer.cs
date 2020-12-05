@@ -31,7 +31,7 @@ namespace NScumm.Audio.Players
     /// DOSBox Raw OPL Player by Sjoerd van der Berg harekiet@zophar.net
     /// This code has been adapted from adplug https://github.com/adplug/adplug
     /// </summary>
-    internal sealed class DroPlayer: IMusicPlayer
+    internal sealed class DroPlayer : IMusicPlayer
     {
         private const byte iCmdDelayS = 0x00;
         private const byte iCmdDelayL = 0x01;
@@ -193,16 +193,23 @@ namespace NScumm.Audio.Players
             // Registers not initialized to 0 will be corrected
             //  in the data stream.
             // opl->setchip(0);
-            for(var i = 0; i < 256; i++) {
+            for (var i = 0; i < 256; i++)
+            {
                 Opl.WriteReg(i, 0);
             }
-            
+
             // opl->setchip(1);
-            for(var i = 0; i < 256; i++) {
+            for (var i = 0; i < 256; i++)
+            {
                 Opl.WriteReg(i, 0);
             }
 
             // opl->setchip(0);
+        }
+
+        public bool Load(Stream stream)
+        {
+            throw new NotImplementedException();
         }
     }
 }

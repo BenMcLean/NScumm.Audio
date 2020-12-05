@@ -631,5 +631,10 @@ namespace NScumm.Audio.Players
                 SlideDown(chan, info);
             SetFreq(chan);
         }
+
+        public bool Load(Stream stream)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -952,5 +952,10 @@ namespace NScumm.Audio.Players
             }
             return text.ToString();
         }
+
+        public bool Load(Stream stream)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

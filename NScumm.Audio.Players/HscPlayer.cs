@@ -98,7 +98,7 @@ namespace NScumm.Audio.Players
                       || ((song[i] & 0x7F) >= total_patterns_in_hsc)
                     ) song[i] = 0xFF;
                 }
-                var len = (fs.Length - fs.Position)/2/64/9;
+                var len = (fs.Length - fs.Position) / 2 / 64 / 9;
                 patterns = new hscnote[len, 64 * 9];
                 for (var i = 0; i < len; i++)
                 {     // load patterns
@@ -166,14 +166,14 @@ namespace NScumm.Audio.Players
                 switch (effect & 0xf0)
                 {     // effect handling
                     case 0:               // global effect
-                                          /* The following fx are unimplemented on purpose:
-                                           * 02 - Slide Mainvolume up
-                                           * 03 - Slide Mainvolume down (here: fade in)
-                                           * 04 - Set Mainvolume to 0
-                                           *
-                                           * This is because i've never seen any HSC modules using the fx this way.
-                                           * All modules use the fx the way, i've implemented it.
-                                           */
+                        /* The following fx are unimplemented on purpose:
+                         * 02 - Slide Mainvolume up
+                         * 03 - Slide Mainvolume down (here: fade in)
+                         * 04 - Set Mainvolume to 0
+                         *
+                         * This is because i've never seen any HSC modules using the fx this way.
+                         * All modules use the fx the way, i've implemented it.
+                         */
                         switch (eff_op)
                         {
                             case 1: pattbreak++; break; // jump to next pattern
@@ -340,6 +340,11 @@ namespace NScumm.Audio.Players
                 Opl.WriteReg(0x40 + op, volm | (ins[3] & ~63));
             else
                 Opl.WriteReg(0x40 + op, ins[3]);    // modulator
+        }
+
+        public bool Load(Stream stream)
+        {
+            throw new NotImplementedException();
         }
     }
 }

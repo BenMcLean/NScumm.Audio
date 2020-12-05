@@ -179,5 +179,10 @@ namespace NScumm.Audio.Players
 
             songend = false;
         }
+
+        public bool Load(Stream stream)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

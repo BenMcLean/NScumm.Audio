@@ -1150,5 +1150,10 @@ namespace NScumm.Audio.Players
         private void midiprintf(string format, params object[] parameters)
         {
         }
+
+        public bool Load(Stream stream)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
