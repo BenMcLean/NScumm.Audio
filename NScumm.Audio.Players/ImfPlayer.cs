@@ -36,7 +36,7 @@ namespace NScumm.Audio.Players
         private long _size;
         private Sdata[] _data;
         private string _footer;
-        private float _rate;
+        private float _rate = 700f;
         private int _pos;
         private bool _songend;
         private ushort _del;
@@ -59,9 +59,15 @@ namespace NScumm.Audio.Players
 
         public bool Load(string path)
         {
-            using (var fs = File.OpenRead(path))
+            _rate = string.Equals(Path.GetExtension(path), ".imf", System.StringComparison.OrdinalIgnoreCase) ? 560f : 700f;
+            using (FileStream fs = new FileStream(path, FileMode.Open))
+                return Load(fs);
+        }
+
+        public bool Load(Stream stream)
+        {
+            using (BinaryReader br = new BinaryReader(stream))
             {
-                var br = new BinaryReader(fs);
                 long fsize, flsize, mfsize = 0;
                 uint i;
 
@@ -72,13 +78,7 @@ namespace NScumm.Audio.Players
 
                     if (header != "ADLIB" || version != 1)
                     {
-                        if (!string.Equals(Path.GetExtension(path), ".imf", System.StringComparison.OrdinalIgnoreCase)
-                                && !string.Equals(Path.GetExtension(path), ".wlf", System.StringComparison.OrdinalIgnoreCase))
-                        {
-                            // It's no IMF file at all
-                            return false;
-                        }
-                        fs.Seek(0, SeekOrigin.Begin); // It's a normal IMF file
+                        stream.Seek(0, SeekOrigin.Begin);
                     }
                     else
                     {
@@ -86,7 +86,7 @@ namespace NScumm.Audio.Players
                         track_name = ReadString(br);
                         game_name = ReadString(br);
                         br.ReadByte();
-                        mfsize = fs.Position + 2;
+                        mfsize = stream.Position + 2;
                     }
                 }
 
@@ -95,13 +95,13 @@ namespace NScumm.Audio.Players
                     fsize = br.ReadInt32();
                 else
                     fsize = br.ReadInt16();
-                flsize = fs.Length;
+                flsize = stream.Length;
                 if (fsize == 0)
                 {       // footerless file (raw music data)
                     if (mfsize != 0)
-                        fs.Seek(-4, SeekOrigin.Current);
+                        stream.Seek(-4, SeekOrigin.Current);
                     else
-                        fs.Seek(-2, SeekOrigin.Current);
+                        stream.Seek(-2, SeekOrigin.Current);
                     _size = (flsize - mfsize) / 4;
                 }
                 else        // file has got a footer
@@ -133,7 +133,7 @@ namespace NScumm.Audio.Players
                     }
                 }
 
-                _rate = GetRate(path);
+                //_rate = GetRate(path);
 
                 _pos = 0; _del = 0; RefreshRate = _rate; _songend = false;
                 Opl.WriteReg(1, 32);	// go to OPL2 mode
@@ -171,19 +171,6 @@ namespace NScumm.Audio.Players
                 text.Append(c);
             }
             return text.ToString();
-        }
-
-        private static float GetRate(string path)
-        {
-            // Otherwise the database is either unavailable, or there's no entry for this file
-            if (string.Equals(Path.GetExtension(path), ".imf", System.StringComparison.OrdinalIgnoreCase)) return 560.0f;
-            if (string.Equals(Path.GetExtension(path), ".wlf", System.StringComparison.OrdinalIgnoreCase)) return 700.0f;
-            return 700.0f; // default speed for unknown files that aren't .IMF or .WLF
-        }
-
-        public bool Load(Stream stream)
-        {
-            throw new NotImplementedException();
         }
     }
 }
